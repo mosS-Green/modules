@@ -3,7 +3,7 @@ import io
 import pathlib
 
 from google.genai.types import File
-from ub_core import LOGGER, ub_core_dirname
+from ub_core import LOGGER, ub_core_dir
 from ub_core.utils import MediaExtensions, bytes_to_mb
 
 from app import extra_config
@@ -11,7 +11,7 @@ from app.plugins.ai.gemini import async_client, utils
 
 
 CODEBASE_PATHS = [
-    pathlib.Path(ub_core_dirname).resolve(),
+    pathlib.Path(ub_core_dir).resolve(),
     pathlib.Path("app").resolve(),
 ]
 EXTRA_MODULES = pathlib.Path("app/modules").resolve()
