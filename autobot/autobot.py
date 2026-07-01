@@ -6,6 +6,7 @@ from datetime import datetime
 
 from google.genai.client import Client
 from google.genai.types import GenerateContentConfig, SafetySetting, ThinkingConfig
+from pydantic import TypeAdapter
 from pyrogram import filters
 from pyrogram.filters import Filter
 from pyrogram.errors import FloodWait
@@ -104,7 +105,7 @@ AUTOBOT_CONFIG = GenerateContentConfig(
     safety_settings=SAFETY_OFF,
     thinking_config=ThinkingConfig(thinking_budget=0),
     response_mime_type="application/json",
-    response_schema=list[AutobotMessage],
+    response_json_schema=TypeAdapter(list[AutobotMessage]).json_schema(),
 )
 
 # ---------------------------------------------------------------------------
@@ -222,7 +223,7 @@ async def _generate_response(history: list, contextual: bool = False) -> str | N
 
 
 async def _send_response(chat_id: int, response_text: str, reply_to: int | None = None):
-    from pydantic import TypeAdapter, ValidationError
+    from pydantic import ValidationError
     from pyrogram.types import ReplyParameters
 
     try:
